@@ -2,3 +2,4 @@
 .kobweb/server/logs
 .kobweb/server/server.jar
 .kobweb/site
+.kobweb/server/state.yaml
