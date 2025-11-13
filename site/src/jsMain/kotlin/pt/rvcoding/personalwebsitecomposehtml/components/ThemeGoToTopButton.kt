@@ -10,14 +10,12 @@ import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.modifiers.position
 import com.varabyte.kobweb.compose.ui.modifiers.zIndex
 import com.varabyte.kobweb.compose.ui.styleModifier
-import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
-import com.varabyte.kobweb.silk.components.style.toModifier
+import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.Position
 import org.jetbrains.compose.web.css.px
-import pt.rvcoding.personalwebsitecomposehtml.styles.ImageMobileStyle
-import pt.rvcoding.personalwebsitecomposehtml.styles.ImageStyle
 import pt.rvcoding.personalwebsitecomposehtml.styles.ThemeIconMobileStyle
 import pt.rvcoding.personalwebsitecomposehtml.styles.ThemeIconStyle
 import pt.rvcoding.personalwebsitecomposehtml.util.Res

@@ -1,14 +1,22 @@
 package pt.rvcoding.personalwebsitecomposehtml.presentation.home
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import com.varabyte.kobweb.compose.css.Overflow
-import com.varabyte.kobweb.compose.css.functions.LinearGradient
-import com.varabyte.kobweb.compose.css.functions.linearGradient
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.modifiers.backgroundImage
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
+import com.varabyte.kobweb.compose.ui.modifiers.onContextMenu
+import com.varabyte.kobweb.compose.ui.modifiers.overflow
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import kotlinx.browser.document
@@ -23,11 +31,19 @@ import pt.rvcoding.personalwebsitecomposehtml.components.ThemeMenuHorizontalButt
 import pt.rvcoding.personalwebsitecomposehtml.components.ThemeMenuVerticalButtons
 import pt.rvcoding.personalwebsitecomposehtml.components.ThemeModeSwitchButton
 import pt.rvcoding.personalwebsitecomposehtml.models.Menu
-import pt.rvcoding.personalwebsitecomposehtml.models.Menu.*
+import pt.rvcoding.personalwebsitecomposehtml.models.Menu.ABOUT_ME
+import pt.rvcoding.personalwebsitecomposehtml.models.Menu.HISTORY
+import pt.rvcoding.personalwebsitecomposehtml.models.Menu.PORTFOLIO
+import pt.rvcoding.personalwebsitecomposehtml.models.Menu.PROFILE
 import pt.rvcoding.personalwebsitecomposehtml.presentation.aboutme.AboutMeCard
-import pt.rvcoding.personalwebsitecomposehtml.presentation.history.*
+import pt.rvcoding.personalwebsitecomposehtml.presentation.history.HistoryFCUPCard
+import pt.rvcoding.personalwebsitecomposehtml.presentation.history.HistoryINESCCard
+import pt.rvcoding.personalwebsitecomposehtml.presentation.history.HistoryITSectorCard
+import pt.rvcoding.personalwebsitecomposehtml.presentation.history.HistorySensormaticCard
+import pt.rvcoding.personalwebsitecomposehtml.presentation.history.HistoryTheFloowCard
 import pt.rvcoding.personalwebsitecomposehtml.presentation.portfolio.PortfolioCVNotesCard
 import pt.rvcoding.personalwebsitecomposehtml.presentation.profile.ProfileCard
+import pt.rvcoding.personalwebsitecomposehtml.styles.backgroundGradient
 import pt.rvcoding.personalwebsitecomposehtml.util.Res
 
 @Page("/home")
@@ -100,15 +116,7 @@ fun HomePage() {
         )
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .backgroundImage(
-                    linearGradient(
-                        dir = LinearGradient.Direction.ToRight,
-                        from = if (colorMode.isLight) Res.Theme.GRADIENT_ONE.color else Res.Theme.GRADIENT_ONE_DARK.color,
-                        to = if (colorMode.isLight) Res.Theme.GRADIENT_TWO.color else Res.Theme.GRADIENT_TWO_DARK.color
-                    )
-                )
+            modifier = Modifier.fillMaxSize()
         ) {
             ThemeMenuHorizontalButtons(
                 colorMode = colorMode,
@@ -117,11 +125,15 @@ fun HomePage() {
 
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                contentAlignment = when (menuSelected) {
+                    HISTORY, PORTFOLIO -> Alignment.TopCenter
+                    else -> Alignment.Center
+                }
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .backgroundImage(colorMode.backgroundGradient())
                         .overflow { y(Overflow.Auto) },
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
