@@ -12,7 +12,7 @@ server:
       script: "build/dist/js/productionExecutable/personalwebsitecomposehtml.js"
       siteRoot: ".kobweb/site"
 
-  port: 80
+  port: 8090
 
   cors:
     hosts:
