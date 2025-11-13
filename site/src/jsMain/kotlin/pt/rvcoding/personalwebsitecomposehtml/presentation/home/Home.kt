@@ -18,6 +18,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.onContextMenu
 import com.varabyte.kobweb.compose.ui.modifiers.overflow
 import com.varabyte.kobweb.core.Page
+import com.varabyte.kobweb.framework.annotations.DelicateApi
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
@@ -48,7 +49,7 @@ import pt.rvcoding.personalwebsitecomposehtml.presentation.profile.ProfileCard
 import pt.rvcoding.personalwebsitecomposehtml.styles.backgroundGradient
 import pt.rvcoding.personalwebsitecomposehtml.util.Res
 
-@Page("/home")
+@OptIn(DelicateApi::class)
 @Composable
 fun HomePage() {
     var colorMode by ColorMode.currentState
