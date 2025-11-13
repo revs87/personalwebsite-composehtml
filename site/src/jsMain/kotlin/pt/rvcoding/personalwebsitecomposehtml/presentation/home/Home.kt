@@ -18,6 +18,8 @@ import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.onContextMenu
 import com.varabyte.kobweb.compose.ui.modifiers.overflow
 import com.varabyte.kobweb.core.Page
+import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import kotlinx.browser.document
 import kotlinx.browser.localStorage
@@ -52,6 +54,7 @@ fun HomePage() {
     var colorMode by ColorMode.currentState
     var menuSelected by remember { mutableStateOf(Menu.Default) }
     var goToTop by remember { mutableStateOf(false) }
+    val breakpoint = rememberBreakpoint()
 
     /**
      * It's a nag not being able to put this in a mutableMap:
@@ -125,10 +128,12 @@ fun HomePage() {
 
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = when (menuSelected) {
-                    HISTORY, PORTFOLIO -> Alignment.TopCenter
-                    else -> Alignment.Center
-                }
+                contentAlignment =
+                    if (breakpoint <= Breakpoint.MD) { Alignment.TopCenter }
+                    else when (menuSelected) {
+                        HISTORY, PORTFOLIO -> Alignment.TopCenter
+                        else -> Alignment.Center
+                    }
             ) {
                 Column(
                     modifier = Modifier
