@@ -23,6 +23,9 @@ import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.silk.components.graphics.Image
+import com.varabyte.kobweb.silk.components.graphics.ImageDecoding
+import com.varabyte.kobweb.silk.components.graphics.ImageFetchPriority
+import com.varabyte.kobweb.silk.components.graphics.ImageLoading
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
 import org.jetbrains.compose.web.attributes.ATarget
@@ -171,6 +174,9 @@ fun VideoSideWithRowOfImages(
                                     .styleModifier {
                                         userSelect(UserSelect.None)
                                     },
+                                loading = ImageLoading.Eager,
+                                decoding = ImageDecoding.Async,
+                                fetchPriority = ImageFetchPriority.High,
                                 src = imageSrc
                             )
                         }
