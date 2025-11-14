@@ -88,13 +88,13 @@ if [ $? -ne 0 ]; then
 fi
 
 
-echo -e "\n\n----- rebuild 4/7 ----- Stopping Kotlin Daemon (Fixes cache lock issues) ---------"
-# This stops all Kotlin compiler daemon processes that might be holding onto file handles.
-$GRADLEW --stop
-
-
-echo -e "\n\n----- rebuild 5/7 ----- Stop running server if present ---------"
-$GRADLEW kobwebStop
+#echo -e "\n\n----- rebuild 4/7 ----- Stopping Kotlin Daemon (Fixes cache lock issues) ---------"
+## This stops all Kotlin compiler daemon processes that might be holding onto file handles.
+#$GRADLEW --stop
+#
+#
+#echo -e "\n\n----- rebuild 5/7 ----- Stop running server if present ---------"
+#$GRADLEW kobwebStop
 
 
 echo -e "\n\n----- rebuild 6/7 ----- Building sources and resources ---------"
