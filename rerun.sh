@@ -63,7 +63,7 @@ $GRADLEW --stop
 
 
 echo -e "\n\n----- rerun 2/3 ----- Stop running server if present ---------"
-$GRADLEW kobwebStop --no-daemon
+$GRADLEW kobwebStop
 
 
 echo -e "\n\n----- rerun 3/3 ----- Running (Non-Interactive) start.sh in $(pwd) ---------"

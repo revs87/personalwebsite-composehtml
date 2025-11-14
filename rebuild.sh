@@ -49,7 +49,7 @@ fi
 cd /opt/personalwebsite/personalwebsite-composehtml || exit 1
 
 
-echo -e "\n\n----- rebuild 1/6 ----- Checkout branch ---------"
+echo -e "\n\n----- rebuild 1/7 ----- Checkout branch ---------"
 # Pull the latest changes from the current branch
 git checkout main
 
@@ -62,7 +62,7 @@ if [ $? -ne 0 ]; then
 fi
 
 
-echo -e "\n\n----- rebuild 2/6 ----- Pulling latest changes from Git ---------"
+echo -e "\n\n----- rebuild 2/7 ----- Pulling latest changes from Git ---------"
 # Pull the latest changes from the current branch
 git pull
 
@@ -75,9 +75,9 @@ if [ $? -ne 0 ]; then
 fi
 
 
-echo -e "\n\n----- rebuild 3/6 ----- Cleaning all previous build artifacts ---------"
-# Clean the entire project build directory, using --no-daemon for stability
-$GRADLEW clean --no-daemon
+echo -e "\n\n----- rebuild 3/7 ----- Cleaning all previous build artifacts ---------"
+# Clean the entire project build directory
+$GRADLEW clean
 
 # Check for clean success
 if [ $? -ne 0 ]; then
@@ -88,14 +88,18 @@ if [ $? -ne 0 ]; then
 fi
 
 
-echo -e "\n\n----- rebuild 4/6 ----- Stop running server if present ---------"
-# Use --no-daemon to ensure this doesn't start a new daemon
-$GRADLEW kobwebStop --no-daemon
+echo -e "\n\n----- rebuild 4/7 ----- Stopping Kotlin Daemon (Fixes cache lock issues) ---------"
+# This stops all Kotlin compiler daemon processes that might be holding onto file handles.
+$GRADLEW --stop
 
 
-echo -e "\n\n----- rebuild 5/6 ----- Building sources and resources ---------"
-# Added all stability flags for a clean, non-incremental, non-daemon build
-$GRADLEW build --no-daemon --no-build-cache --rerun-tasks
+echo -e "\n\n----- rebuild 5/7 ----- Stop running server if present ---------"
+$GRADLEW kobwebStop
+
+
+echo -e "\n\n----- rebuild 6/7 ----- Building sources and resources ---------"
+# Added all stability flags for a clean, non-incremental
+$GRADLEW build --no-build-cache --rerun-tasks
 
 # Check for build success
 if [ $? -ne 0 ]; then
@@ -106,9 +110,9 @@ if [ $? -ne 0 ]; then
 fi
 
 
-echo -e "\n\n----- rebuild 6/6 ----- Building kobweb export tasks ---------"
+echo -e "\n\n----- rebuild 7/7 ----- Building kobweb export tasks ---------"
 # Ensure the final required artifacts are generated with stability flags
-$GRADLEW :site:kobwebBuildOnly --no-daemon --no-build-cache --rerun-tasks
+$GRADLEW :site:kobwebBuildOnly --no-build-cache --rerun-tasks
 
 # Check for build success
 if [ $? -ne 0 ]; then
@@ -119,7 +123,11 @@ if [ $? -ne 0 ]; then
 fi
 
 
+sudo systemctl restart personalwebsite.service
+
+
 # Display the total time taken for all preparation and build steps
 display_elapsed_time
+
 
 # The script now exits cleanly, allowing the systemd service to pick up the deployed artifacts.
