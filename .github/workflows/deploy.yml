@@ -31,5 +31,4 @@ jobs:
           ssh $REMOTE_SERVER << EOF
             cd $REMOTE_SCRIPT_DIR
             ./$SCRIPT_NAME
-            sudo systemctl restart personalwebsite.service
           EOF
