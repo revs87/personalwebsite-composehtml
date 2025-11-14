@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "pt.rvcoding.personalwebsitecomposehtml"
-version = "1.6"
+version = "1.7"
 
 
 tasks.register("kobwebBuildOnly") {
