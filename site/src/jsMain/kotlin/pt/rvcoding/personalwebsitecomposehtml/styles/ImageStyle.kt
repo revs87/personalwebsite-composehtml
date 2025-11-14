@@ -1,20 +1,20 @@
 package pt.rvcoding.personalwebsitecomposehtml.styles
 
-import com.varabyte.kobweb.compose.css.CSSTransition
+import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.css.TransitionProperty
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.transition
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
-import com.varabyte.kobweb.silk.components.style.active
-import com.varabyte.kobweb.silk.components.style.hover
+import com.varabyte.kobweb.silk.style.CssStyle
+import com.varabyte.kobweb.silk.style.selectors.active
+import com.varabyte.kobweb.silk.style.selectors.hover
 import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.px
 
-val ImageStyle by ComponentStyle {
+val ImageStyle = CssStyle {
     base {
         Modifier
-            .transition(CSSTransition(property = TransitionProperty.All, duration = 300.ms))
+            .transition(Transition.of(property = TransitionProperty.All, duration = 300.ms))
     }
     hover {
         Modifier
@@ -25,10 +25,10 @@ val ImageStyle by ComponentStyle {
             .padding(all = 8.px)
     }
 }
-val ImageMobileStyle by ComponentStyle {
+val ImageMobileStyle = CssStyle {
     base {
         Modifier
-            .transition(CSSTransition(property = TransitionProperty.All, duration = 300.ms))
+            .transition(Transition.of(property = TransitionProperty.All, duration = 300.ms))
     }
     active {
         Modifier

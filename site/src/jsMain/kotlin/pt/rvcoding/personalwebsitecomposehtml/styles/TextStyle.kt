@@ -1,19 +1,30 @@
 package pt.rvcoding.personalwebsitecomposehtml.styles
 
-import com.varabyte.kobweb.compose.css.*
+import com.varabyte.kobweb.compose.css.Cursor
+import com.varabyte.kobweb.compose.css.FontWeight
+import com.varabyte.kobweb.compose.css.Transition
+import com.varabyte.kobweb.compose.css.UserSelect
+import com.varabyte.kobweb.compose.css.userSelect
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
-import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.modifiers.color
+import com.varabyte.kobweb.compose.ui.modifiers.cursor
+import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
+import com.varabyte.kobweb.compose.ui.modifiers.fontSize
+import com.varabyte.kobweb.compose.ui.modifiers.fontWeight
+import com.varabyte.kobweb.compose.ui.modifiers.lineHeight
+import com.varabyte.kobweb.compose.ui.modifiers.opacity
+import com.varabyte.kobweb.compose.ui.modifiers.transition
 import com.varabyte.kobweb.compose.ui.styleModifier
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
-import com.varabyte.kobweb.silk.components.style.hover
+import com.varabyte.kobweb.silk.style.CssStyle
+import com.varabyte.kobweb.silk.style.selectors.hover
 import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import pt.rvcoding.personalwebsitecomposehtml.util.Res
 
 
-val MyTextStyle by ComponentStyle {
+val MyTextStyle = CssStyle {
     base {
         Modifier
             .fontFamily(Res.String.ROBOTO_REGULAR)
@@ -27,7 +38,7 @@ val MyTextStyle by ComponentStyle {
     }
 }
 
-val MyLinkStyle by ComponentStyle {
+val MyLinkStyle = CssStyle {
     base {
         Modifier
             .fontFamily(Res.String.ROBOTO_REGULAR)
@@ -41,7 +52,7 @@ val MyLinkStyle by ComponentStyle {
             .fontWeight(FontWeight.Bold)
             .cursor(Cursor.Pointer)
             .transition(
-                CSSTransition(property = "color", duration = 300.ms)
+                Transition.of(property = "color", duration = 300.ms)
             )
     }
     hover {

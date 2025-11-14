@@ -1,7 +1,10 @@
 package pt.rvcoding.personalwebsitecomposehtml.models.content
 
 import pt.rvcoding.personalwebsitecomposehtml.models.BULLET
-import pt.rvcoding.personalwebsitecomposehtml.models.ContentType.*
+import pt.rvcoding.personalwebsitecomposehtml.models.ContentType.BoldText
+import pt.rvcoding.personalwebsitecomposehtml.models.ContentType.IndentedText
+import pt.rvcoding.personalwebsitecomposehtml.models.ContentType.Paragraph
+import pt.rvcoding.personalwebsitecomposehtml.models.ContentType.Text
 import pt.rvcoding.personalwebsitecomposehtml.models.PersonalContent
 
 

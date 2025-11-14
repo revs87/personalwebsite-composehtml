@@ -5,16 +5,17 @@ server:
   files:
     dev:
       contentRoot: "build/processedResources/js/main/public"
-      script: "build/dist/js/developmentExecutable/personalwebsitecomposehtml.js"
+      script: "build/dist/js/productionExecutable/personalwebsitecomposehtml.js"
       api: "build/libs/personalwebsitecomposehtml.jar"
+      siteRoot: ".kobweb/site"
     prod:
       script: "build/dist/js/productionExecutable/personalwebsitecomposehtml.js"
       siteRoot: ".kobweb/site"
 
-  port: 80
+  port: 8090
 
   cors:
     hosts:
-      - name: "personalwebsite-5b1m.onrender.com"
+      - name: "rvcoding.com"
         schemes:
           - "https"
