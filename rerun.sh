@@ -32,6 +32,7 @@ function display_elapsed_time {
 
 
 # Define the Gradle wrapper command based on the environment (Linux/macOS)
+#GRADLEW="./gradlew"
 GRADLEW="/opt/personalwebsite/personalwebsite-composehtml/gradlew"
 if [ ! -f "$GRADLEW" ] || [ ! -x "$GRADLEW" ]; then
     echo "Error: Gradle wrapper not found or is not executable."
@@ -40,6 +41,7 @@ if [ ! -f "$GRADLEW" ] || [ ! -x "$GRADLEW" ]; then
     display_elapsed_time
     exit 1
 fi
+#KOBWEB_CLI="/Users/ruivieira/.sdkman/candidates/kobweb/current/bin/kobweb"
 KOBWEB_CLI="/home/admin/.sdkman/candidates/kobweb/current/bin/kobweb"
 if [ ! -f "$KOBWEB_CLI" ] || [ ! -x "$KOBWEB_CLI" ]; then
     echo "Error: Kobweb CLI not found or is not executable."
@@ -50,7 +52,9 @@ if [ ! -f "$KOBWEB_CLI" ] || [ ! -x "$KOBWEB_CLI" ]; then
 fi
 $GRADLEW --version
 $KOBWEB_CLI --version
-cd /opt/personalwebsite/personalwebsite-composehtml
+
+# Move to the correct execution directory
+cd /opt/personalwebsite/personalwebsite-composehtml || exit 1
 
 
 echo -e "\n\n----- rerun 1/3 ----- Stopping Kotlin Daemon (Fixes cache lock issues) ---------"
@@ -59,7 +63,7 @@ $GRADLEW --stop
 
 
 echo -e "\n\n----- rerun 2/3 ----- Stop running server if present ---------"
-$GRADLEW kobwebStop
+$GRADLEW kobwebStop --no-daemon
 
 
 echo -e "\n\n----- rerun 3/3 ----- Running (Non-Interactive) start.sh in $(pwd) ---------"

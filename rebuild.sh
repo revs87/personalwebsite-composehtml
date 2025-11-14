@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Capture high-resolution start time (seconds.nanoseconds) using a format compatible with bc.
 START_TIME=$(date +%s.%N)
 
@@ -31,8 +30,12 @@ function display_elapsed_time {
 }
 
 
-# Define the Gradle wrapper command based on the environment (Linux/macOS)
+# Define the Gradle wrapper command
+#GRADLEW="./gradlew"
 GRADLEW="/opt/personalwebsite/personalwebsite-composehtml/gradlew"
+
+# --- 1. SETUP AND VALIDATION ---
+
 # Check if the wrapper is executable
 if [ ! -f "$GRADLEW" ] || [ ! -x "$GRADLEW" ]; then
     echo "Error: Gradle wrapper not found or is not executable."
@@ -41,12 +44,14 @@ if [ ! -f "$GRADLEW" ] || [ ! -x "$GRADLEW" ]; then
     display_elapsed_time
     exit 1
 fi
-cd /opt/personalwebsite/personalwebsite-composehtml
+
+# Move to the correct execution directory
+cd /opt/personalwebsite/personalwebsite-composehtml || exit 1
 
 
 echo -e "\n\n----- rebuild 1/7 ----- Checkout branch ---------"
 # Pull the latest changes from the current branch
-git checkout dev
+git checkout main
 
 # Check for checkout success
 if [ $? -ne 0 ]; then
@@ -71,8 +76,8 @@ fi
 
 
 echo -e "\n\n----- rebuild 3/7 ----- Cleaning all previous build artifacts ---------"
-# Clean the entire project build directory
-$GRADLEW clean
+# Clean the entire project build directory, using --no-daemon for stability
+$GRADLEW clean --no-daemon
 
 # Check for clean success
 if [ $? -ne 0 ]; then
@@ -89,12 +94,13 @@ $GRADLEW --stop
 
 
 echo -e "\n\n----- rebuild 5/7 ----- Stop running server if present ---------"
-$GRADLEW kobwebStop
+# Use --no-daemon to avoid starting a new daemon just to stop the server
+$GRADLEW kobwebStop --no-daemon
 
 
 echo -e "\n\n----- rebuild 6/7 ----- Building sources and resources ---------"
-# Added --no-build-cache and --rerun-tasks to force a complete, non-incremental build
-$GRADLEW build --no-build-cache --rerun-tasks
+# Added all stability flags for a clean, non-incremental, non-daemon build
+$GRADLEW build --no-daemon --no-build-cache --rerun-tasks
 
 # Check for build success
 if [ $? -ne 0 ]; then
@@ -106,7 +112,8 @@ fi
 
 
 echo -e "\n\n----- rebuild 7/7 ----- Building kobweb export tasks ---------"
-$GRADLEW :site:kobwebBuildOnly
+# Ensure the final required artifacts are generated with stability flags
+$GRADLEW :site:kobwebBuildOnly --no-daemon --no-build-cache --rerun-tasks
 
 # Check for build success
 if [ $? -ne 0 ]; then
@@ -120,5 +127,4 @@ fi
 # Display the total time taken for all preparation and build steps
 display_elapsed_time
 
-
-# Note: The server will run until you stop it (e.g., Ctrl+C).
+# The script now exits cleanly, allowing the systemd service to pick up the deployed artifacts.
